@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Грустная страница</title>
+    <style>
+        body {
+            background: linear-gradient(to bottom, #2c2c2c, #1a1a1a);
+            color: #888;
+            font-family: 'Courier New', Courier, monospace;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            flex-direction: column;
+            text-align: center;
+            overflow: hidden;
+        }
+        h1 {
+            font-size: 3rem;
+            text-shadow: 2px 2px 10px rgba(255, 255, 255, 0.1);
+            opacity: 0.7;
+        }
+        .sad-face {
+            font-size: 5rem;
+            opacity: 0.5;
+        }
+        .container {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);
+            position: relative;
+            z-index: 1;
+        }
+        .falling-text {
+            position: absolute;
+            top: -50px;
+            font-size: 2rem;
+            color: rgba(200, 200, 200, 0.7);
+            animation: fall linear infinite;
+        }
+        @keyframes fall {
+            from {
+                transform: translateY(-50px);
+                opacity: 1;
+            }
+            to {
+                transform: translateY(100vh);
+                opacity: 0;
+            }
+        }
+
+        /* Медиа-запрос для экранов 16:9 (ПК) */
+        @media (min-width: 768px) {
+            h1 {
+                font-size: 4rem; /* Увеличиваем размер заголовка для ПК */
+            }
+            .sad-face {
+                font-size: 6rem; /* Увеличиваем размер смайла для ПК */
+            }
+            .falling-text {
+                font-size: 2.5rem; /* Увеличиваем размер падающего текста для ПК */
+            }
+        }
+
+        /* Медиа-запрос для телефонов с соотношением 9:16 */
+        @media (max-width: 375px) {
+            h1 {
+                font-size: 2rem; /* Уменьшаем размер заголовка для телефонов */
+            }
+            .sad-face {
+                font-size: 4rem; /* Уменьшаем размер смайла для телефонов */
+            }
+            .falling-text {
+                font-size: 1.5rem; /* Уменьшаем размер падающего текста для телефонов */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="sad-face">:(</div>
+        <h1>я проебал везде</h1>
+    </div>
+    <script>
+        const phrases = [
+            "Все из за меня", "я еблан", "я чмо", "что я делаю не так",
+            "я хуевый сын", "я хуевый друг", "я хуевый парень", "я урод"
+        ];
+        let positionIndex = 0;
+        function createFallingText() {
+            for (let i = 0; i < 3; i++) {
+                const text = document.createElement("div");
+                text.className = "falling-text";
+                text.textContent = phrases[Math.floor(Math.random() * phrases.length)];
+                text.style.left = ((positionIndex % 10) * 10) + Math.random() * 5 + "vw"; // Равномерное распределение
+                text.style.animationDuration = (1.5 + Math.random() * 2) + "s";
+                document.body.appendChild(text);
+                setTimeout(() => text.remove(), 3000);
+                positionIndex++;
+            }
+        }
+        setInterval(createFallingText, 500);
+    </script>
+</body>
+</html>
